@@ -9,7 +9,7 @@ import {
   fetchRecords
 } from '../services/api';
 import CrimeList from '../components/crime/CrimeList';
-import PoliceOfficerList from '../components/officer/OfficerList';
+import OfficerList from '../components/officer/OfficerList';
 import PersonList from '../components/person/PersonList';
 import WitnessList from '../components/Witness/WitnessList';
 import CaseList from '../components/case/CaseList';
@@ -68,7 +68,7 @@ const Dashboard = () => {
       <h2 className="text-2xl font-bold mb-4">Crimes</h2>
       <CrimeList crimes={crimes} />
       <h2 className="text-2xl font-bold mb-4">Police Officers</h2>
-      <PoliceOfficerList policeOfficers={policeOfficers} />
+      <OfficerList policeOfficers={policeOfficers} />
       <h2 className="text-2xl font-bold mb-4">Persons</h2>
       <PersonList persons={persons} />
       <h2 className="text-2xl font-bold mb-4">Witnesses</h2>
