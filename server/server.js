@@ -7,6 +7,7 @@ import criminalRecordRoutes from './routes/criminalRecordRoutes.js';
 import policeOfficerRoutes from './routes/policeOfficerRoutes.js';
 import courtCaseRoutes from './routes/courtCaseRoutes.js';
 import witnessRoutes from './routes/witnessRoutes.js';
+import './dbConfig.js';
 
 dotenv.config();
 

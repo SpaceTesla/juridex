@@ -1,5 +1,8 @@
+// components/Login.js
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // HTTP client library
 import useAuth from '../hooks/useAuth';
 
 const Login = () => {
@@ -18,10 +21,12 @@ const Login = () => {
     }
 
     try {
-      await login(username, password);
+      const response = await axios.post('/api/auth/login', { username, password });
+      const token = response.data.token;
+      login(token); // Save token in localStorage or Context
       navigate('/dashboard');
     } catch (err) {
-      setError(err.message || 'Invalid username or password.');
+      setError(err.response.data.message || 'Invalid username or password.');
     }
   };
 
