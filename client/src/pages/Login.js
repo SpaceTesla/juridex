@@ -1,12 +1,10 @@
-// components/Login.js
-
+// src/components/Login.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; // HTTP client library
-import useAuth from '../hooks/useAuth';
+import { useAuth } from '../contexts/AuthContext';
 
 const Login = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const { login } = useAuth();
@@ -14,19 +12,13 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (username === '' || password === '') {
-      setError('Please fill in all fields.');
-      return;
-    }
+    setError('');
 
     try {
-      const response = await axios.post('/api/auth/login', { username, password });
-      const token = response.data.token;
-      login(token); // Save token in localStorage or Context
+      await login(email, password);
       navigate('/dashboard');
     } catch (err) {
-      setError(err.response.data.message || 'Invalid username or password.');
+      setError(err.message || 'Failed to log in');
     }
   };
 
@@ -37,12 +29,12 @@ const Login = () => {
         {error && <p className="text-sm text-red-500">{error}</p>}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="form-group">
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username:</label>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email:</label>
             <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
           </div>

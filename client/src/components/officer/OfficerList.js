@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { fetchPoliceOfficers } from '../../services/api'; // Adjust the path as necessary
 
 const OfficerList = () => {
   const [officers, setOfficers] = useState([]);
@@ -7,15 +8,18 @@ const OfficerList = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get('/api/officers')
-      .then(response => {
-        setOfficers(response.data);
+    const fetchData = async () => {
+      try {
+        const officersData = await fetchPoliceOfficers(); // Fetch officers using the API function
+        setOfficers(officersData);
         setLoading(false);
-      })
-      .catch(error => {
+      } catch (error) {
         setError(error);
         setLoading(false);
-      });
+      }
+    };
+
+    fetchData();
   }, []);
 
   if (loading) return <p>Loading...</p>;

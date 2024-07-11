@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from "cors";
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import crimeRoutes from './routes/crimeRoutes.js';
@@ -7,11 +8,12 @@ import criminalRecordRoutes from './routes/criminalRecordRoutes.js';
 import policeOfficerRoutes from './routes/policeOfficerRoutes.js';
 import courtCaseRoutes from './routes/courtCaseRoutes.js';
 import witnessRoutes from './routes/witnessRoutes.js';
-import './dbConfig.js';
+import './config/dbConfig.js';
 
 dotenv.config();
 
 const app = express();
+app.use(cors());
 const PORT = process.env.PORT || 5000;
 
 // Middleware

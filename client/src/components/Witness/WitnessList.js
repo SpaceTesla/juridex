@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { fetchWitnesses } from '../../services/api'; // Adjust the path as necessary
 
 const WitnessList = () => {
   const [witnesses, setWitnesses] = useState([]);
@@ -7,15 +7,18 @@ const WitnessList = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get('/api/witnesses')
-      .then(response => {
-        setWitnesses(response.data);
+    const fetchData = async () => {
+      try {
+        const witnessesData = await fetchWitnesses(); // Fetch witnesses using the API function
+        setWitnesses(witnessesData);
         setLoading(false);
-      })
-      .catch(error => {
+      } catch (error) {
         setError(error);
         setLoading(false);
-      });
+      }
+    };
+
+    fetchData();
   }, []);
 
   if (loading) return <p>Loading...</p>;

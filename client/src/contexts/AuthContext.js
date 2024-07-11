@@ -1,36 +1,38 @@
-// JURIDEX/client/src/contexts/AuthContext.js
-
-import React, { createContext, useState, useEffect } from 'react';
-import { login } from '../services/api';
+// src/contexts/AuthContext.js
+import React, { useContext, useState, useEffect, createContext } from 'react';
+import { auth } from '../firebase';
+import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
 const AuthContext = createContext();
 
-const AuthProvider = ({ children }) => {
-    const [authData, setAuthData] = useState(null);
+export const AuthProvider = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const storedAuthData = localStorage.getItem('authData');
-        if (storedAuthData) {
-            setAuthData(JSON.parse(storedAuthData));
-        }
-    }, []);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+      setLoading(false);
+    });
 
-    const loginHandler = async (credentials) => {
-        const data = await login(credentials);
-        setAuthData(data);
-        localStorage.setItem('authData', JSON.stringify(data));
-    };
+    return unsubscribe;
+  }, []);
 
-    const logoutHandler = () => {
-        setAuthData(null);
-        localStorage.removeItem('authData');
-    };
+  const login = (email, password) => {
+    return signInWithEmailAndPassword(auth, email, password);
+  };
 
-    return (
-        <AuthContext.Provider value={{ authData, loginHandler, logoutHandler }}>
-            {children}
-        </AuthContext.Provider>
-    );
+  const logout = () => {
+    return signOut(auth);
+  };
+
+  return (
+    <AuthContext.Provider value={{ currentUser, login, logout }}>
+      {!loading && children}
+    </AuthContext.Provider>
+  );
 };
 
-export { AuthContext, AuthProvider };
+export const useAuth = () => {
+  return useContext(AuthContext);
+};

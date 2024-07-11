@@ -1,82 +1,73 @@
-import React, { useEffect, useState } from 'react';
-import useAuth from '../hooks/useAuth';
-import { 
-  fetchCrimes, 
-  fetchPoliceOfficers, 
-  fetchPersons, 
-  fetchWitnesses,
-  fetchCases,
-  fetchRecords
-} from '../services/api';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import CrimeList from '../components/crime/CrimeList';
-import OfficerList from '../components/officer/OfficerList';
 import PersonList from '../components/person/PersonList';
-import WitnessList from '../components/Witness/WitnessList';
-import CaseList from '../components/case/CaseList';
 import RecordList from '../components/record/RecordList';
+import OfficerList from '../components/Officer/OfficerList';
+import CaseList from '../components/case/CaseList';
+import WitnessList from '../components/Witness/WitnessList'; // Ensure this path is correct
 
 const Dashboard = () => {
-  const { authData, logoutHandler } = useAuth();
-  const [crimes, setCrimes] = useState([]);
-  const [policeOfficers, setPoliceOfficers] = useState([]);
-  const [persons, setPersons] = useState([]);
-  const [witnesses, setWitnesses] = useState([]);
-  const [cases, setCases] = useState([]);
-  const [records, setRecords] = useState([]);
+  const { currentUser, logout } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const crimeData = await fetchCrimes();
-        setCrimes(crimeData);
+    if (!currentUser) {
+      navigate('/login');
+    }
+  }, [currentUser, navigate]);
 
-        const officerData = await fetchPoliceOfficers();
-        setPoliceOfficers(officerData);
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate('/login');
+    } catch (error) {
+      console.error('Logout failed', error);
+    }
+  };
 
-        const personData = await fetchPersons();
-        setPersons(personData);
-
-        const witnessData = await fetchWitnesses();
-        setWitnesses(witnessData);
-
-        const caseData = await fetchCases();
-        setCases(caseData);
-
-        const recordData = await fetchRecords();
-        setRecords(recordData);
-      } catch (error) {
-        console.error('Failed to fetch data:', error);
-      }
-    };
-
-    getData();
-  }, []);
-
-  if (!authData) {
+  if (!currentUser) {
     return <p>Loading...</p>;
   }
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
-      <button 
-        onClick={logoutHandler}
-        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-4"
-      >
-        Logout
-      </button>
-      <h2 className="text-2xl font-bold mb-4">Crimes</h2>
-      <CrimeList crimes={crimes} />
-      <h2 className="text-2xl font-bold mb-4">Police Officers</h2>
-      <OfficerList policeOfficers={policeOfficers} />
-      <h2 className="text-2xl font-bold mb-4">Persons</h2>
-      <PersonList persons={persons} />
-      <h2 className="text-2xl font-bold mb-4">Witnesses</h2>
-      <WitnessList witnesses={witnesses} />
-      <h2 className="text-2xl font-bold mb-4">Cases</h2>
-      <CaseList cases={cases} />
-      <h2 className="text-2xl font-bold mb-4">Criminal Records</h2>
-      <RecordList records={records} />
+    <div className="min-h-screen bg-gray-100">
+      <div className="container mx-auto p-4">
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-2xl font-bold">Dashboard</h1>
+          <button
+            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
+        </div>
+        <section>
+          <h3 className="text-xl font-bold mb-4">Crimes</h3>
+          <CrimeList />
+        </section>
+        <section>
+          <h3 className="text-xl font-bold mb-4">Persons</h3>
+          <PersonList />
+        </section>
+        <section>
+          <h3 className="text-xl font-bold mb-4">Records</h3>
+          <RecordList />
+        </section>
+        <section>
+          <h3 className="text-xl font-bold mb-4">Officers</h3>
+          <OfficerList />
+        </section>
+        <section>
+          <h3 className="text-xl font-bold mb-4">Cases</h3>
+          <CaseList />
+        </section>
+        <section>
+          <h3 className="text-xl font-bold mb-4">Witnesses</h3>
+          <WitnessList />
+        </section>
+      </div>
     </div>
   );
 };

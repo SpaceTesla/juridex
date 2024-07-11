@@ -7,7 +7,7 @@ const API_URL = 'http://localhost:5000/api'; // Replace with your actual API URL
 // Function to fetch cases from the server
 export const fetchCases = async () => {
   try {
-    const response = await axios.get(`${API_URL}/cases`);
+    const response = await axios.get(`${API_URL}/court-cases`);
     return response.data;
   } catch (error) {
     throw new Error(`Failed to fetch cases: ${error}`);
@@ -37,7 +37,7 @@ export const fetchPersons = async () => {
 // Function to fetch police officers from the server
 export const fetchPoliceOfficers = async () => {
   try {
-    const response = await axios.get(`${API_URL}/policeOfficers`);
+    const response = await axios.get(`${API_URL}/police-officers`);
     return response.data;
   } catch (error) {
     throw new Error(`Failed to fetch police officers: ${error}`);
@@ -47,7 +47,7 @@ export const fetchPoliceOfficers = async () => {
 // Function to fetch records from the server
 export const fetchRecords = async () => {
   try {
-    const response = await axios.get(`${API_URL}/records`);
+    const response = await axios.get(`${API_URL}/criminal-records`);
     return response.data;
   } catch (error) {
     throw new Error(`Failed to fetch records: ${error}`);

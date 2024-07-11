@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { fetchRecords } from '../../services/api'; // Adjust the path as necessary
 
 const RecordList = () => {
   const [records, setRecords] = useState([]);
@@ -7,15 +7,18 @@ const RecordList = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get('/api/criminal_records')
-      .then(response => {
-        setRecords(response.data);
+    const fetchData = async () => {
+      try {
+        const recordsData = await fetchRecords(); // Fetch records using the API function
+        setRecords(recordsData);
         setLoading(false);
-      })
-      .catch(error => {
+      } catch (error) {
         setError(error);
         setLoading(false);
-      });
+      }
+    };
+
+    fetchData();
   }, []);
 
   if (loading) return <p>Loading...</p>;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { fetchCrimes } from '../../services/api'; // Adjust the path as necessary
 
 const CrimeList = () => {
   const [crimes, setCrimes] = useState([]);
@@ -7,15 +7,18 @@ const CrimeList = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get('/api/crimes')
-      .then(response => {
-        setCrimes(response.data);
-        setLoading(false);
-      })
-      .catch(error => {
+    const fetchData = async () => {
+      try {
+        const crimesData = await fetchCrimes();
+        setCrimes(crimesData);
+      } catch (error) {
         setError(error);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchData();
   }, []);
 
   if (loading) return <p>Loading...</p>;
