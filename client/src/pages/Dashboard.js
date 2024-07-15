@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import CrimeList from '../components/crime/CrimeList';
@@ -6,11 +6,49 @@ import PersonList from '../components/person/PersonList';
 import RecordList from '../components/record/RecordList';
 import OfficerList from '../components/Officer/OfficerList';
 import CaseList from '../components/case/CaseList';
-import WitnessList from '../components/Witness/WitnessList'; // Ensure this path is correct
+import WitnessList from '../components/Witness/WitnessList';
+
+const CollapsibleSection = ({ title, children }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleSection = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <section className="mb-4">
+      <div
+        className="flex justify-between items-center cursor-pointer bg-gray-200 p-2 rounded"
+        onClick={toggleSection}
+      >
+        <h3 className="text-xl font-bold">{title}</h3>
+        <span>{isOpen ? '-' : '+'}</span>
+      </div>
+      {isOpen && <div className="mt-2">{children}</div>}
+    </section>
+  );
+};
 
 const Dashboard = () => {
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
+  const [page] = useState({
+    crimes: 1,
+    persons: 1,
+    records: 1,
+    officers: 1,
+    cases: 1,
+    witnesses: 1,
+  });
+  const [itemsPerPage] = useState(10);
+  const [totalItems, setTotalItems] = useState({
+    crimes: 0,
+    persons: 0,
+    records: 0,
+    officers: 0,
+    cases: 0,
+    witnesses: 0,
+  });
 
   useEffect(() => {
     if (!currentUser) {
@@ -25,6 +63,13 @@ const Dashboard = () => {
     } catch (error) {
       console.error('Logout failed', error);
     }
+  };
+
+  const updateTotalItems = (section, count) => {
+    setTotalItems((prevState) => ({
+      ...prevState,
+      [section]: count,
+    }));
   };
 
   if (!currentUser) {
@@ -43,30 +88,48 @@ const Dashboard = () => {
             Logout
           </button>
         </div>
-        <section>
-          <h3 className="text-xl font-bold mb-4">Crimes</h3>
-          <CrimeList />
-        </section>
-        <section>
-          <h3 className="text-xl font-bold mb-4">Persons</h3>
-          <PersonList />
-        </section>
-        <section>
-          <h3 className="text-xl font-bold mb-4">Records</h3>
-          <RecordList />
-        </section>
-        <section>
-          <h3 className="text-xl font-bold mb-4">Officers</h3>
-          <OfficerList />
-        </section>
-        <section>
-          <h3 className="text-xl font-bold mb-4">Cases</h3>
-          <CaseList />
-        </section>
-        <section>
-          <h3 className="text-xl font-bold mb-4">Witnesses</h3>
-          <WitnessList />
-        </section>
+        <CollapsibleSection title="Crimes">
+          <CrimeList
+            page={page.crimes}
+            itemsPerPage={itemsPerPage}
+            updateTotalItems={(count) => updateTotalItems('crimes', count)}
+          />
+        </CollapsibleSection>
+        <CollapsibleSection title="Persons">
+          <PersonList
+            page={page.persons}
+            itemsPerPage={itemsPerPage}
+            updateTotalItems={(count) => updateTotalItems('persons', count)}
+          />
+        </CollapsibleSection>
+        <CollapsibleSection title="Records">
+          <RecordList
+            page={page.records}
+            itemsPerPage={itemsPerPage}
+            updateTotalItems={(count) => updateTotalItems('records', count)}
+          />
+        </CollapsibleSection>
+        <CollapsibleSection title="Officers">
+          <OfficerList
+            page={page.officers}
+            itemsPerPage={itemsPerPage}
+            updateTotalItems={(count) => updateTotalItems('officers', count)}
+          />
+        </CollapsibleSection>
+        <CollapsibleSection title="Cases">
+          <CaseList
+            page={page.cases}
+            itemsPerPage={itemsPerPage}
+            updateTotalItems={(count) => updateTotalItems('cases', count)}
+          />
+        </CollapsibleSection>
+        <CollapsibleSection title="Witnesses">
+          <WitnessList
+            page={page.witnesses}
+            itemsPerPage={itemsPerPage}
+            updateTotalItems={(count) => updateTotalItems('witnesses', count)}
+          />
+        </CollapsibleSection>
       </div>
     </div>
   );

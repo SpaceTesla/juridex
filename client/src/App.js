@@ -6,7 +6,7 @@ import Home from './pages/Home.js';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Header from './components/common/Header';
-
+import Register from "./pages/Register"
 
 function App() {
   return (
@@ -17,6 +17,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/register" element={<Register />} />
           {/* Add other routes here */}
         </Routes>
       </Router>

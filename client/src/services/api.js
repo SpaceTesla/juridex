@@ -14,6 +14,41 @@ export const fetchCases = async () => {
   }
 };
 
+export const fetchCaseById = async (caseId) => {
+  try {
+    const response = await axios.get(`${API_URL}/court-cases/${caseId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to fetch case: ${error}`);
+  }
+};
+
+export const createCase = async (caseData) => {
+  try {
+    const response = await axios.post(`${API_URL}/court-cases`, caseData);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to create case: ${error}`);
+  }
+};
+
+export const updateCase = async (caseId, caseData) => {
+  try {
+    const response = await axios.put(`${API_URL}/court-cases/${caseId}`, caseData);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to update case: ${error}`);
+  }
+};
+
+export const deleteCase = async (caseId) => {
+  try {
+    const response = await axios.delete(`${API_URL}/court-cases/${caseId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to delete case: ${error}`);
+  }
+};
 // Function to fetch crimes from the server
 export const fetchCrimes = async () => {
   try {
@@ -21,6 +56,25 @@ export const fetchCrimes = async () => {
     return response.data;
   } catch (error) {
     throw new Error(`Failed to fetch crimes: ${error}`);
+  }
+};
+
+export const createCrime = async (crimeData) => {
+  try {
+    const response = await axios.post(`${API_URL}/crimes`, crimeData);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to create crime: ${error}`);
+  }
+};
+
+// Function to update an existing crime
+export const updateCrime = async (crimeId, crimeData) => {
+  try {
+    const response = await axios.put(`${API_URL}/crimes/${crimeId}`, crimeData);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to update crime: ${error}`);
   }
 };
 
@@ -34,6 +88,26 @@ export const fetchPersons = async () => {
   }
 };
 
+// Function to create a new person on the server
+export const createPerson = async (personData) => {
+  try {
+    const response = await axios.post(`${API_URL}/persons`, personData);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to create person: ${error}`);
+  }
+};
+
+// Function to update an existing person on the server
+export const updatePerson = async (personId, personData) => {
+  try {
+    const response = await axios.put(`${API_URL}/persons/${personId}`, personData);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to update person: ${error}`);
+  }
+};
+
 // Function to fetch police officers from the server
 export const fetchPoliceOfficers = async () => {
   try {
@@ -41,6 +115,26 @@ export const fetchPoliceOfficers = async () => {
     return response.data;
   } catch (error) {
     throw new Error(`Failed to fetch police officers: ${error}`);
+  }
+};
+
+// Function to create a new police officer on the server
+export const createPoliceOfficer = async (officerData) => {
+  try {
+    const response = await axios.post(`${API_URL}/police-officers`, officerData);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to create police officer: ${error}`);
+  }
+};
+
+// Function to update an existing police officer on the server
+export const updatePoliceOfficer = async (officerId, officerData) => {
+  try {
+    const response = await axios.put(`${API_URL}/police-officers/${officerId}`, officerData);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to update police officer: ${error}`);
   }
 };
 
@@ -54,6 +148,27 @@ export const fetchRecords = async () => {
   }
 };
 
+
+// Create a new record
+export const createRecord = async (newRecordData) => {
+  try {
+    const response = await axios.post(`${API_URL}/records`, newRecordData);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// Update an existing record
+export const updateRecord = async (personId, crimeId, updatedRecordData) => {
+  try {
+    const response = await axios.put(`${API_URL}/records/${personId}/${crimeId}`, updatedRecordData);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // Function to fetch witnesses from the server
 export const fetchWitnesses = async () => {
   try {
@@ -61,6 +176,26 @@ export const fetchWitnesses = async () => {
     return response.data;
   } catch (error) {
     throw new Error(`Failed to fetch witnesses: ${error}`);
+  }
+};
+
+// Function to create a new witness on the server
+export const createWitness = async (witnessData) => {
+  try {
+    const response = await axios.post(`${API_URL}/witnesses`, witnessData);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to create witness: ${error}`);
+  }
+};
+
+// Function to update an existing witness on the server
+export const updateWitness = async (witnessId, witnessData) => {
+  try {
+    const response = await axios.put(`${API_URL}/witnesses/${witnessId}`, witnessData);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to update witness: ${error}`);
   }
 };
 

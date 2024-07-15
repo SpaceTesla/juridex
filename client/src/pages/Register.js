@@ -1,47 +1,33 @@
+// Register.js
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
 import { auth } from '../firebase';
 
-const Login = () => {
+const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { login } = useAuth();
 
-  const handleLogin = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     setError('');
 
     try {
-      // Check if the email belongs to a jailer (administrator)
-      if (isJailerEmail(email)) {
-        await login(email, password);
-        navigate('/dashboard'); // Redirect to dashboard for jailers
-      } else {
-        // Redirect to prisoner registration page
-        navigate('/register');
-      }
+      const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+      // Optionally, you can do something with userCredential.user
+      navigate('/dashboard'); // Redirect to dashboard on successful registration
     } catch (err) {
-      setError(err.message || 'Failed to log in');
+      setError(err.message || 'Failed to register');
     }
-  };
-
-  // Function to check if the email belongs to a jailer
-  const isJailerEmail = (email) => {
-    // Implement your logic to check against jailer email list
-    // For example:
-    const jailerEmails = ['abc@gmail.com', 'jailer@gmail.com'];
-    return jailerEmails.includes(email);
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold text-center text-gray-800">Login</h2>
+        <h2 className="text-2xl font-bold text-center text-gray-800">Register</h2>
         {error && <p className="text-sm text-red-500">{error}</p>}
-        <form onSubmit={handleLogin} className="space-y-4">
+        <form onSubmit={handleRegister} className="space-y-4">
           <div className="form-group">
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email:</label>
             <input
@@ -64,14 +50,12 @@ const Login = () => {
               required
             />
           </div>
-          <div className="flex justify-between items-center">
-            <button type="submit" className="w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Login</button>
-            <Link to="/register" className="text-sm text-indigo-600 hover:text-indigo-800">Register</Link>
-          </div>
+          <button type="submit" className="w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Register</button>
+          <Link to="/login" className="block text-sm text-center text-indigo-600 hover:text-indigo-800 mt-2">Already have an account? Login</Link>
         </form>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Register;
