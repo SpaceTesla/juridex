@@ -103,7 +103,7 @@ const CaseList = () => {
             onChange={handleNewCaseInputChange}
           />
           <input
-            type="text"
+            type="date"
             name="CourtDate"
             placeholder="Court Date"
             className="p-2 border border-gray-300 mr-2 mb-2"
@@ -194,7 +194,7 @@ const CaseList = () => {
             onChange={handleSelectedCaseInputChange}
           />
           <input
-            type="text"
+            type="date"
             name="CourtDate"
             placeholder="Court Date"
             className="p-2 border border-gray-300 mb-2"

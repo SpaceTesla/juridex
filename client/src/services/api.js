@@ -127,7 +127,7 @@ export const fetchRecords = async () => {
 // Create a new record
 export const createRecord = async (newRecordData) => {
   try {
-    const response = await axios.post(`${API_URL}/records`, newRecordData);
+    const response = await axios.post(`${API_URL}/criminal-records`, newRecordData);
     return response.data;
   } catch (error) {
     throw error;
@@ -137,12 +137,13 @@ export const createRecord = async (newRecordData) => {
 // Update an existing record
 export const updateRecord = async (personId, crimeId, updatedRecordData) => {
   try {
-    const response = await axios.put(`${API_URL}/records/${personId}/${crimeId}`, updatedRecordData);
+    const response = await axios.put(`${API_URL}/criminal-records/${personId}/${crimeId}`, updatedRecordData);
     return response.data;
   } catch (error) {
     throw error;
   }
 };
+
 
 // Function to fetch witnesses from the server
 export const fetchWitnesses = async () => {

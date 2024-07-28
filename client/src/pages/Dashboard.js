@@ -109,18 +109,18 @@ const Dashboard = () => {
             updateTotalItems={(count) => updateTotalItems('records', count)}
           />
         </CollapsibleSection>
-        <CollapsibleSection title="Officers">
-          <OfficerList
-            page={page.officers}
-            itemsPerPage={itemsPerPage}
-            updateTotalItems={(count) => updateTotalItems('officers', count)}
-          />
-        </CollapsibleSection>
         <CollapsibleSection title="Cases">
           <CaseList
             page={page.cases}
             itemsPerPage={itemsPerPage}
             updateTotalItems={(count) => updateTotalItems('cases', count)}
+          />
+        </CollapsibleSection>
+        <CollapsibleSection title="Officers">
+          <OfficerList
+            page={page.officers}
+            itemsPerPage={itemsPerPage}
+            updateTotalItems={(count) => updateTotalItems('officers', count)}
           />
         </CollapsibleSection>
         <CollapsibleSection title="Witnesses">
