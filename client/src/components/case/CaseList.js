@@ -170,7 +170,7 @@ const CaseList = () => {
               <td className="py-2">{courtCase.Verdict}</td>
               <td className="py-2">{courtCase.Sentence}</td>
               <td className="py-2">{courtCase.OfficerID}</td>
-              <td className="py-2">
+              <td className="py-2 flex justify-around">
                 <button
                   className="text-yellow-500 hover:underline"
                   onClick={() => setSelectedCase(courtCase)}

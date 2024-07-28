@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import CrimeList from '../components/crime/CrimeList';
 import PersonList from '../components/person/PersonList';
 import RecordList from '../components/record/RecordList';
-import OfficerList from '../components/Officer/OfficerList';
+import OfficerList from '../components/officer/OfficerList';
 import CaseList from '../components/case/CaseList';
 import WitnessList from '../components/Witness/WitnessList';
 
@@ -95,7 +95,7 @@ const Dashboard = () => {
             updateTotalItems={(count) => updateTotalItems('crimes', count)}
           />
         </CollapsibleSection>
-        <CollapsibleSection title="Persons">
+        <CollapsibleSection title="Person">
           <PersonList
             page={page.persons}
             itemsPerPage={itemsPerPage}

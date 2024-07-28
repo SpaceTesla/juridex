@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { fetchPoliceOfficers, createPoliceOfficer, updatePoliceOfficer } from '../../services/api'; // Adjust the path as necessary
+import {
+  fetchPoliceOfficers,
+  createPoliceOfficer,
+  updatePoliceOfficer,
+} from '../../services/api'; // Adjust the path as necessary
 
 const OfficerList = () => {
   const [officers, setOfficers] = useState([]);
@@ -154,9 +158,12 @@ const OfficerList = () => {
               <td className="py-2">{officer.Rank}</td>
               <td className="py-2">{officer.Department}</td>
               <td className="py-2">
-                <button className="text-yellow-500 hover:underline" onClick={() => setSelectedOfficer(officer)}>
+                <button className="text-yellow-500 hover:underline mr-2" onClick={() => setSelectedOfficer(officer)}>
                   Edit
                 </button>
+                {/* <button className="text-red-500 hover:underline" onClick={() => handleDelete(officer.OfficerID)}>
+                  Delete
+                </button> */}
               </td>
             </tr>
           ))}

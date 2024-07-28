@@ -1,5 +1,3 @@
-// server/services/api.js
-
 import axios from 'axios';
 
 const API_URL = 'http://localhost:5000/api'; // Replace with your actual API URL
@@ -11,15 +9,6 @@ export const fetchCases = async () => {
     return response.data;
   } catch (error) {
     throw new Error(`Failed to fetch cases: ${error}`);
-  }
-};
-
-export const fetchCaseById = async (caseId) => {
-  try {
-    const response = await axios.get(`${API_URL}/court-cases/${caseId}`);
-    return response.data;
-  } catch (error) {
-    throw new Error(`Failed to fetch case: ${error}`);
   }
 };
 
@@ -41,14 +30,6 @@ export const updateCase = async (caseId, caseData) => {
   }
 };
 
-export const deleteCase = async (caseId) => {
-  try {
-    const response = await axios.delete(`${API_URL}/court-cases/${caseId}`);
-    return response.data;
-  } catch (error) {
-    throw new Error(`Failed to delete case: ${error}`);
-  }
-};
 // Function to fetch crimes from the server
 export const fetchCrimes = async () => {
   try {
@@ -68,7 +49,6 @@ export const createCrime = async (crimeData) => {
   }
 };
 
-// Function to update an existing crime
 export const updateCrime = async (crimeId, crimeData) => {
   try {
     const response = await axios.put(`${API_URL}/crimes/${crimeId}`, crimeData);
@@ -88,7 +68,6 @@ export const fetchPersons = async () => {
   }
 };
 
-// Function to create a new person on the server
 export const createPerson = async (personData) => {
   try {
     const response = await axios.post(`${API_URL}/persons`, personData);
@@ -98,7 +77,6 @@ export const createPerson = async (personData) => {
   }
 };
 
-// Function to update an existing person on the server
 export const updatePerson = async (personId, personData) => {
   try {
     const response = await axios.put(`${API_URL}/persons/${personId}`, personData);
@@ -118,7 +96,6 @@ export const fetchPoliceOfficers = async () => {
   }
 };
 
-// Function to create a new police officer on the server
 export const createPoliceOfficer = async (officerData) => {
   try {
     const response = await axios.post(`${API_URL}/police-officers`, officerData);
@@ -128,7 +105,6 @@ export const createPoliceOfficer = async (officerData) => {
   }
 };
 
-// Function to update an existing police officer on the server
 export const updatePoliceOfficer = async (officerId, officerData) => {
   try {
     const response = await axios.put(`${API_URL}/police-officers/${officerId}`, officerData);
@@ -147,7 +123,6 @@ export const fetchRecords = async () => {
     throw new Error(`Failed to fetch records: ${error}`);
   }
 };
-
 
 // Create a new record
 export const createRecord = async (newRecordData) => {

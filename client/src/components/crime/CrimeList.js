@@ -190,7 +190,7 @@ const CrimeList = () => {
                   View
                 </button>
                 <button
-                  className="text-yellow-500 hover:underline"
+                  className="text-yellow-500 hover:underline mr-2"
                   onClick={() => setSelectedCrime(crime)}
                 >
                   Edit

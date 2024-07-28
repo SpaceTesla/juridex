@@ -1,7 +1,6 @@
 {
   "name": "client",
   "version": "1.0.0",
-  "description": "",
   "proxy": "http://localhost:5000",
   "main": "index.js",
   "scripts": {
@@ -30,7 +29,8 @@
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.24.1",
     "react-scripts": "^5.0.1",
-    "stream-browserify": "^3.0.0"
+    "stream-browserify": "^3.0.0",
+    "web-vitals": "^4.2.1"
   },
   "browserslist": {
     "production": [
@@ -48,5 +48,6 @@
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.39",
     "tailwindcss": "^3.4.4"
-  }
+  },
+  "description": ""
 }

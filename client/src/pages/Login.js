@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { auth } from '../firebase';
+import backgroundImage from '../assets/images/bg4.jpg'; // Adjust the path as needed
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -20,8 +20,7 @@ const Login = () => {
         await login(email, password);
         navigate('/dashboard'); // Redirect to dashboard for jailers
       } else {
-        // Redirect to prisoner registration page
-        navigate('/register');
+        setError('Unauthorized user');
       }
     } catch (err) {
       setError(err.message || 'Failed to log in');
@@ -37,8 +36,11 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
+    <div
+      className="flex items-center justify-center min-h-screen"
+      style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+    >
+      <div className="w-full max-w-md p-8 space-y-6 bg-white bg-opacity-90 rounded-lg shadow-md">
         <h2 className="text-2xl font-bold text-center text-gray-800">Login</h2>
         {error && <p className="text-sm text-red-500">{error}</p>}
         <form onSubmit={handleLogin} className="space-y-4">
@@ -64,9 +66,8 @@ const Login = () => {
               required
             />
           </div>
-          <div className="flex justify-between items-center">
+          <div className="flex justify-center items-center">
             <button type="submit" className="w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Login</button>
-            <Link to="/register" className="text-sm text-indigo-600 hover:text-indigo-800">Register</Link>
           </div>
         </form>
       </div>
