@@ -104,6 +104,9 @@
    npm start
    ```
 
+## API Documentation
+You can read the API documentation [here](https://github.com/SpaceTesla/juridex/blob/main/server/readme.md) or in the /`server` folder.
+
 ## Contributing
 To contribute to the project, please fork the repository and submit a pull request. Ensure that your changes are well-tested and documented.
 
